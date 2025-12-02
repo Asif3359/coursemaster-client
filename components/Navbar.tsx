@@ -24,9 +24,9 @@ export function Navbar() {
   };
 
   return (
-    <nav className="border-b px-8 py-4">
+    <nav className="border-b border-indigo-100 bg-white/80 backdrop-blur px-4 md:px-8 py-4">
       <div className="flex justify-between items-center max-w-7xl mx-auto">
-        <Link href="/" className="text-xl font-bold">
+        <Link href="/" className="text-xl font-bold text-indigo-700">
           CourseMaster
         </Link>
         <div className="flex gap-4 items-center">
@@ -44,14 +44,18 @@ export function Navbar() {
             <>
               {user?.role === "admin" ? (
                 <Link href="/admin/dashboard">
-                  <button className="px-4 py-2 hover:underline">Admin</button>
+                  <button className="px-4 py-2 text-sm text-indigo-700 hover:text-indigo-900">
+                    Admin
+                  </button>
                 </Link>
               ) : (
                 <Link href="/dashboard">
-                  <button className="px-4 py-2 hover:underline">Dashboard</button>
+                  <button className="px-4 py-2 text-sm text-indigo-700 hover:text-indigo-900">
+                    Dashboard
+                  </button>
                 </Link>
               )}
-              <span>{user?.username}</span>
+              <span className="text-sm text-slate-700">{user?.username}</span>
               <Button onClick={handleLogout}>Logout</Button>
             </>
           ) : (

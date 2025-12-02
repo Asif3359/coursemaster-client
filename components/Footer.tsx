@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -18,19 +20,19 @@ function Footer() {
           <h3 className="font-semibold mb-2 text-slate-100">Navigation</h3>
           <ul className="space-y-1 text-slate-300">
             <li>
-              <a href="/" className="hover:text-white transition-colors">
+              <Link href="/" className="hover:text-white transition-colors">
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/dashboard" className="hover:text-white transition-colors">
+              <Link href="/dashboard" className="hover:text-white transition-colors">
                 Dashboard
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/courses/1" className="hover:text-white transition-colors">
+              <Link href="/courses/1" className="hover:text-white transition-colors">
                 Sample Course
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -51,12 +53,12 @@ function Footer() {
         <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-slate-400">
           <span>© {currentYear} CourseMaster. All rights reserved.</span>
           <span className="flex gap-4">
-            <a href="#" className="hover:text-slate-200 transition-colors">
+            <Link href="#" className="hover:text-slate-200 transition-colors">
               Terms
-            </a>
-            <a href="#" className="hover:text-slate-200 transition-colors">
+            </Link>
+            <Link href="#" className="hover:text-slate-200 transition-colors">
               Privacy
-            </a>
+            </Link>
           </span>
         </div>
       </div>

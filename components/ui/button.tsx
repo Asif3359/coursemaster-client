@@ -10,11 +10,13 @@ export function Button({
   variant = "default",
   ...props
 }: ButtonProps) {
-  const baseStyles = "px-4 py-2 rounded-md disabled:opacity-50";
+  const baseStyles =
+    "px-4 py-2 rounded-md disabled:opacity-50 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2";
   const variants = {
-    default: "bg-slate-900 text-white hover:bg-slate-800",
-    ghost: "bg-transparent hover:bg-slate-100",
-    outline: "border border-slate-300 bg-transparent hover:bg-slate-50",
+    default: "bg-indigo-600 text-white hover:bg-indigo-700",
+    ghost: "bg-transparent text-indigo-700 hover:bg-indigo-50",
+    outline:
+      "border border-indigo-200 bg-transparent text-indigo-700 hover:bg-indigo-50",
   };
 
   return (
