@@ -13,11 +13,13 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<{ username?: string; email?: string }>({});
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setFieldErrors({});
     setLoading(true);
 
     try {
@@ -29,7 +31,28 @@ export default function RegisterPage() {
         setError(response.message || "Registration failed");
       }
     } catch (err: any) {
-      setError(err.message || "Registration failed");
+      const errorMessage = err.message || "Registration failed";
+      
+      // Parse error message to detect specific field errors
+      const newFieldErrors: { username?: string; email?: string } = {};
+      const lowerErrorMessage = errorMessage.toLowerCase();
+
+      // Check for username already exists
+      if (lowerErrorMessage.includes("username already exists")) {
+        newFieldErrors.username = "This username is already taken. Please choose another one.";
+      }
+
+      // Check for email already exists
+      if (lowerErrorMessage.includes("email already exists")) {
+        newFieldErrors.email = "This email is already registered. Please use a different email or try logging in.";
+      }
+
+      // If we have field-specific errors, show those; otherwise show general error
+      if (Object.keys(newFieldErrors).length > 0) {
+        setFieldErrors(newFieldErrors);
+      } else {
+        setError(errorMessage);
+      }
     } finally {
       setLoading(false);
     }
@@ -68,12 +91,29 @@ export default function RegisterPage() {
                 </div>
                 <Input
                   value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="pl-10 border-2 border-slate-200 focus:border-indigo-500 focus:ring-indigo-500"
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                    if (fieldErrors.username) {
+                      setFieldErrors({ ...fieldErrors, username: undefined });
+                    }
+                  }}
+                  className={`pl-10 border-2 ${
+                    fieldErrors.username
+                      ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+                      : "border-slate-200 focus:border-indigo-500 focus:ring-indigo-500"
+                  }`}
                   placeholder="Choose a username"
                   required
                 />
               </div>
+              {fieldErrors.username && (
+                <p className="mt-1 text-sm text-red-600 flex items-center gap-1">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  {fieldErrors.username}
+                </p>
+              )}
             </div>
 
             <div>
@@ -89,12 +129,29 @@ export default function RegisterPage() {
                 <Input
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="pl-10 border-2 border-slate-200 focus:border-indigo-500 focus:ring-indigo-500"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (fieldErrors.email) {
+                      setFieldErrors({ ...fieldErrors, email: undefined });
+                    }
+                  }}
+                  className={`pl-10 border-2 ${
+                    fieldErrors.email
+                      ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+                      : "border-slate-200 focus:border-indigo-500 focus:ring-indigo-500"
+                  }`}
                   placeholder="you@example.com"
                   required
                 />
               </div>
+              {fieldErrors.email && (
+                <p className="mt-1 text-sm text-red-600 flex items-center gap-1">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  {fieldErrors.email}
+                </p>
+              )}
             </div>
 
             <div>
