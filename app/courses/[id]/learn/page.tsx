@@ -9,12 +9,9 @@ import { dashboardApi } from "@/lib/api/dashboard";
 import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import { Assignment, assignmentsApi } from "@/lib/api/assignments";
 import { quizzesApi } from "@/lib/api/quizzes";
 import toast from "react-hot-toast";
-
-const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 
 export default function CourseLearnPage() {
   const params = useParams();
